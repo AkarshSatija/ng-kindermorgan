@@ -11,7 +11,7 @@
         <div class="col-md-4 responsive_fix2">
           <img src="./../assets/Untitled.jpg" class="img-fluid" />
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 mb-2">
           <h2 style="font-size: 26px;text-align: center;">Multiple Inductive and Conductive Sweep Procedure</h2>
           <p>Inductive Sweeps described below shall be perfomed using at leasttwo different line locating instruments(Multi-frequency and single freequency) to reduce risk of an instrument malfunction failing to locate an unknow undergrouity.</p>
           <ul>
@@ -27,7 +27,7 @@
           <p><strong>Note#3: </strong>If there is any doubt that the excavation area was not property swept repeat the inductive sweep procedure until there is no doubt.</p>
         </div>
       </div>
-      <form #contractForm="ngForm">
+      <form #contractForm="ngForm" class="mt-3">
         <div class="row">
           <div class="col-md-6">
             <!-- {{contractForm.value | json}} -->
@@ -48,11 +48,8 @@
                 </mat-form-field>
               </li>
               <li>Date & Time :
-                <mat-form-field style="    width: 72%;">
-                  <input matInput [matDatepicker]="picker" name="signatureDate" [(ngModel)]="model.signatureDate" #signatureDate="ngModel">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
+                <input [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1" placeholder="" [(ngModel)]="model.signatureDate"  name="signatureDate" style="  margin-top: 20px; margin-bottom: 20px;  width: 72%; border: none;    border-bottom: 0.2px #495057 solid;">
+                <owl-date-time #dt1></owl-date-time>
               </li>
               <li class="bdrs">Signature of the person performing sweep : <signature-pad style="display: block;margin-top: 14px;"
                 #sigpad1 [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
@@ -71,7 +68,7 @@
                   <input matInput name="stationNumberTo" [(ngModel)]="model.stationNumberTo" #stationNumberTo="ngModel">
                 </mat-form-field>
               </li>
-              <li class="bdrs">KM Representative Signature : <signature-pad #sigpad2 [options]="signaturePadOptions2" (onBeginEvent)="drawStart2()" (onEndEvent)="drawComplete2()"></signature-pad>
+              <li class="bdrs">KM Representative Signature :<br> <signature-pad #sigpad2 [options]="signaturePadOptions2" (onBeginEvent)="drawStart2()" (onEndEvent)="drawComplete2()"></signature-pad>
               </li>
             </ul>
           </div>

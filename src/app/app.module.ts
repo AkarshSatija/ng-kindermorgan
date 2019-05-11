@@ -13,7 +13,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule, MatInputModule,MatNativeDateModule,MatProgressSpinnerModule} from '@angular/material';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import { ContractService } from './contract.service';
 
@@ -28,14 +28,16 @@ import { ContractService } from './contract.service';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatDatepickerModule, 
+    MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
     AppRoutingModule,
-    SignaturePadModule
+    SignaturePadModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule
   //  AngularSignaturePadModule.forRoot()
-  
+
   ],
   providers: [ContractService],
   bootstrap: [AppComponent]
