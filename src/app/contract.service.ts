@@ -16,7 +16,7 @@ const httpOptions = {
 export class ContractService {
   constructor(private _http: HttpClient) {}
 
-  private contractUrl = "http://localhost:3000/contract/save";
+  private contractUrl = "http://3.17.26.6:3000/contract/save";
 
   postContractApi(data): Observable<any> {
     return this._http.post<any>(

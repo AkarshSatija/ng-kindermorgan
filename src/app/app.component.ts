@@ -172,7 +172,12 @@ export class AppComponent {
     this._contractService.postContractApi(this.model).subscribe(data=>{
       console.log("saved");
       console.log(data);
+      this.model={
+        pdf:'http://3.17.26.6:3000/'+data.pdf.replace( "./","")
+      }
       alert('Saved Successfully');
+      window.open(this.model.pdf, '_blank');
+
     });
 
 

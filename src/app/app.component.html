@@ -81,6 +81,8 @@
   <div>
     <mat-spinner *ngIf="loading === true"></mat-spinner>
   </div>
-  <button mat-button (click)="captureScreen()" class="btn btn-warning mrg_r">Print</button>
+  <div *ngIf="model.pdf">PDF Link: <a [href]="[model.pdf]" [target]="_blank">{{model.pdf}}</a></div>
+  <br><br>
+  <!-- <button mat-button (click)="captureScreen()" class="btn btn-warning mrg_r">Print</button> -->
   <button mat-button (click)="save()" class="btn btn-success">Submit!</button>
 </div>
