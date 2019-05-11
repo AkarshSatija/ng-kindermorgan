@@ -1,65 +1,62 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-root',
-//   templateUrl: './app.component.html',
-//   styleUrls: ['./app.component.scss']
-// })
-// export class AppComponent {
-//   title = 'kindermorgan';
-// }
-
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { SignaturePad } from "angular2-signaturepad/signature-pad";
-import * as jspdf from "jspdf";
-import html2canvas from "html2canvas";
-import { FormBuilder, FormGroup } from '@angular/forms';
-
-
 import { ContractService } from "./contract.service";
+import { OwlDateTime } from 'ng-pick-datetime/date-time/date-time.class';
+import { environment } from 'src/environments/environment.prod';
+
+
+// API End URL
+const apiEndpoint = environment.apiEndpoint;
+
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"]
 })
+
+
 export class AppComponent {
-  loading:boolean=false;
+  // Set loading when making request
+  loading: boolean = false;
+
+  // Model which will post to api 
   model: any = {};
 
-//@ViewChild(SignaturePad) signaturePad: SignaturePad;
+  // Check Signature Done or Not
+  drawnSignature: boolean = false;
+  drawnKmSignature: boolean = false;
+
+  // Signature Pad
   @ViewChild('sigpad1') signaturePad: SignaturePad;
   @ViewChild('sigpad2') signaturePad2: SignaturePad;
-
   @ViewChild('content') content: ElementRef;
 
 
-
+  // Signature 
   private signaturePadOptions: Object = {
     // passed through to szimek/signature_pad constructor
     minWidth: 0.5,
-    canvasWidth: 200,
-    canvasHeight: 50,
+    canvasWidth: 400,
+    canvasHeight: 120,
     dotSize: 2,
-    backgroundColor:'rgb(220,220,220)'
+    backgroundColor: 'rgb(220,220,220)'
   };
-
 
   private signaturePadOptions2: Object = {
     // passed through to szimek/signature_pad constructor
     minWidth: 0.5,
-    canvasWidth: 200,
-    canvasHeight: 50,
+    canvasWidth: 400,
+    canvasHeight: 120,
     dotSize: 2,
-    backgroundColor:'rgb(220,220,220)'
+    backgroundColor: 'rgb(220,220,220)'
   };
 
   constructor(private _contractService: ContractService) {
-    // no-op
-    // this.model = new Contract();
-    // console.log(this.model);
-
+    // Set Signature Date default
+    this.model.signatureDate = new Date();
   }
+
   //Clear Signature
   spClear() {
     this.signaturePad.clear();
@@ -81,6 +78,7 @@ export class AppComponent {
   drawComplete() {
     // will be notified of szimek/signature_pad's onEnd event
     console.log(this.signaturePad.toDataURL());
+    this.drawnSignature = true;
   }
 
   // Signature
@@ -94,6 +92,7 @@ export class AppComponent {
   drawComplete2() {
     // will be notified of szimek/signature_pad's onEnd event
     console.log(this.signaturePad2.toDataURL());
+    this.drawnKmSignature = true;
   }
 
   // Signature
@@ -102,86 +101,42 @@ export class AppComponent {
     console.log("begin drawing");
   }
 
-  // PFD
-  public captureScreen() {
-    this.loading=true;
-    var data = document.getElementById('contentToConvert');
-    html2canvas(data).then(canvas => {
-      // Few necessary setting options
-      var imgWidth = 208;
-      var pageHeight = 295;
-      var imgHeight = canvas.height * imgWidth / canvas.width;
-      var heightLeft = imgHeight;
 
-      const contentDataURL = canvas.toDataURL('image/png')
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-      var position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
 
-      let fileName = this.model.jobName+'_'+ new Date().toLocaleString()+".pdf";
-
-      pdf.save(fileName); // Generated PDF
-      this.loading=false;
-    });
-   // this.loading=false;
-  }
-
-  // Save Data
+  // Save Form Dat and Genereate PDF
   save() {
+
     console.log("saving");
+    this.loading = true;
 
-    var data = document.getElementById('contentToConvert');
-    html2canvas(data).then(canvas => {
-      // Few necessary setting options
-      var imgWidth = 208;
-      var pageHeight = 295;
-      var imgHeight = canvas.height * imgWidth / canvas.width;
-      var heightLeft = imgHeight;
+    this.model.signature = this.signaturePad.toDataURL();
+    this.model.kmSignature = this.signaturePad2.toDataURL();
 
-      const contentDataURL = canvas.toDataURL('image/png')
-
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-      var position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
-      // var pdfFile = pdf.output('datauristring'); // Generated PDF
-      var pdfFile = btoa(pdf.output('datauristring')); // Generated PDF
-      console.log('pdfFile - '+pdfFile);
-      const fileName = this.model.jobName+'-'+ new Date().toLocaleDateString()+".pdf";
-
-      // this.model.pdfFile=pdfFile;
-      // this.model.fileName=fileName;
-
-
-    this.model.signature=this.signaturePad.toDataURL();
-    this.model.kmSignature=this.signaturePad2.toDataURL();
-    //this.model.htmlData = document.getElementById('contentToConvert');
-
-    // const formData = new FormData();
-    // formData.append('pdfFile', pdfFile);
-    // formData.append('model', this.model);
+    if (this.drawnSignature == false || this.drawnKmSignature == false) {
+      this.loading = false;
+      alert('Please signed before submitting request!')
+      return;
+    }
 
     console.log(this.model);
 
-    // this._contractService.postTestApi(this.model).subscribe(data=>{
-    //   console.log("saved");
-    //   console.log(data);
-    //   alert('Saved Successfully');
-    // });
+    this._contractService.postContractApi(this.model).subscribe(data => {
 
-
-    this._contractService.postContractApi(this.model).subscribe(data=>{
       console.log("saved");
       console.log(data);
-      this.model={
-        pdf:'http://3.17.26.6:3000/'+data.pdf.replace( "./","")
+
+      this.model = {
+        pdf: apiEndpoint + data.pdf.replace("./", "")
       }
+
+      this.loading = false;
       alert('Saved Successfully');
+
+      // Open PFD in seprate tab
       window.open(this.model.pdf, '_blank');
 
     });
 
-
-  });
 
   }
 

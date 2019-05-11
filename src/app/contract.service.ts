@@ -1,14 +1,17 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { environment } from 'src/environments/environment';
 
+// API End Point
+const apiEndpoint = environment.apiEndpoint;
+
+
+// Ser http request header
 const httpOptions = {
     headers: new HttpHeaders({ "Content-Type": "application/json" })
   };
 
-  const httpMultipartOptions = {
-    headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })
-  };
 
 @Injectable({
   providedIn: "root"
@@ -16,7 +19,8 @@ const httpOptions = {
 export class ContractService {
   constructor(private _http: HttpClient) {}
 
-  private contractUrl = "http://3.17.26.6:3000/contract/save";
+  private contractUrl = apiEndpoint+"contract/save";
+
 
   postContractApi(data): Observable<any> {
     return this._http.post<any>(
@@ -26,12 +30,4 @@ export class ContractService {
     );
   }
 
-  // postTestApi(data): Observable<any> {
-  //   //alert(" service calling");
-  //   return this._http.post<any>(
-  //     this.contractUrl,
-  //     data,
-  //     httpOptions
-  //   );
-  // }
 }
