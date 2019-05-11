@@ -1,0 +1,89 @@
+<div id="contentToConvert">
+  <section id="header">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 responsive_fix">
+          <img src="./../assets/kinder-morgan-logo.jpg" class="img-fluid" style="width:200px;margin-left: 53px;">
+        </div>
+        <div class="col-md-6"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 responsive_fix2">
+          <img src="./../assets/Untitled.jpg" class="img-fluid" />
+        </div>
+        <div class="col-md-8">
+          <h2 style="font-size: 26px;text-align: center;">Multiple Inductive and Conductive Sweep Procedure</h2>
+          <p>Inductive Sweeps described below shall be perfomed using at leasttwo different line locating instruments(Multi-frequency and single freequency) to reduce risk of an instrument malfunction failing to locate an unknow undergrouity.</p>
+          <ul>
+            <li><strong>Inductive Sweep#1:</strong> On existing KM pipelines, confirm location and mark centreline of the pipeline. One new construction. perform an inductive sweep to clear the proposed trench line.</li>
+            <li><strong>Inductive Sweep#2A:</strong> Perform an inductive sweep around the perimeter of the excavation area (or section of the excavation area).</li>
+            <li><strong>Inductive Sweep#2B:</strong> After completing inductive sweep #2A performs an inductive sweep crossing the excavation area every five (5)feet until the entire excavation area has been swept.</li>
+            <li><strong>Inductive Sweep#3:</strong> Perform an inductive sweep crossing the excavation area in a 'Zig Zag' pattern every ten (10) feet until the entire excavation area has been swept indicate the area has been swept by writing on centerline stakes inductive sweep date name
+            </li>
+            <li>If only a section of the excavation area has been swept then repeat. <strong>Steps#1.#2& #3</strong> on the next section until 100% of the excavation area has been swept.</li>
+          </ul>
+          <p><strong>Note#1:</strong> If there is any doubt that the excavation area was not property swept repeat the inductive sweep procedure until there is no doubt.</p>
+          <p><strong>Note#2: </strong>If there is any doubt that the excavation area was not property swept repeat the inductive sweep procedure until there is no doubt.</p>
+          <p><strong>Note#3: </strong>If there is any doubt that the excavation area was not property swept repeat the inductive sweep procedure until there is no doubt.</p>
+        </div>
+      </div>
+      <form #contractForm="ngForm">
+        <div class="row">
+          <div class="col-md-6">
+            <!-- {{contractForm.value | json}} -->
+            <ul class="list-unstyled sign">
+              <!-- <li>Signature of person performing Sweep :
+              <mat-form-field class="example-full-width width_fix">
+                  <input matInput name="name" [(ngModel)]="model.signatureName"  #name="ngModel">
+                </mat-form-field>
+          </li> -->
+              <li>Vendor Name :
+                <mat-form-field class="example-full-width width_fix" style="    width: 70%;">
+                  <input matInput name="vendorName" [(ngModel)]="model.vendorName" #vendorName="ngModel">
+                </mat-form-field>
+              </li>
+              <li>Job Name :
+                <mat-form-field class="example-full-width width_fix" style="width:76%;">
+                  <input matInput name="jobName" [(ngModel)]="model.jobName" #jobName="ngModel">
+                </mat-form-field>
+              </li>
+              <li>Date & Time :
+                <mat-form-field style="    width: 72%;">
+                  <input matInput [matDatepicker]="picker" name="signatureDate" [(ngModel)]="model.signatureDate" #signatureDate="ngModel">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </li>
+              <li class="bdrs">Signature of the person performing sweep : <signature-pad style="display: block;margin-top: 14px;"
+                #sigpad1 [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="list-unstyled sign">
+              <li>Station Number From :
+                <mat-form-field class="example-full-width width_fix" style="width:55%;">
+                  <input matInput name="stationNumberFrom" [(ngModel)]="model.stationNumberFrom" #stationNumberFrom="ngModel">
+                </mat-form-field>
+              </li>
+              <li>Station Number To :
+                <mat-form-field class="example-full-width width_fix" style="width:60%;">
+                  <input matInput name="stationNumberTo" [(ngModel)]="model.stationNumberTo" #stationNumberTo="ngModel">
+                </mat-form-field>
+              </li>
+              <li class="bdrs">KM Representative Signature : <signature-pad #sigpad2 [options]="signaturePadOptions2" (onBeginEvent)="drawStart2()" (onEndEvent)="drawComplete2()"></signature-pad>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>
+<div class="col-md-12 text-center btn_space">
+  <div>
+    <mat-spinner *ngIf="loading === true"></mat-spinner>
+  </div>
+  <button mat-button (click)="captureScreen()" class="btn btn-warning mrg_r">Print</button>
+  <button mat-button (click)="save()" class="btn btn-success">Submit!</button>
+</div>
