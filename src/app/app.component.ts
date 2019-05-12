@@ -114,7 +114,7 @@ export class AppComponent {
 
     if (this.drawnSignature == false || this.drawnKmSignature == false) {
       this.loading = false;
-      alert('Please signed before submitting request!')
+      alert('Please sign before submitting the form!')
       return;
     }
 
@@ -129,15 +129,18 @@ export class AppComponent {
         pdf: apiEndpoint + data.pdf.replace("./", "")
       }
 
+      // reset details
       this.loading = false;
+      this.spClear();
+      this.drawnSignature = false;
+      this.drawnKmSignature = false;
+      
       alert('Saved Successfully');
 
       // Open PFD in seprate tab
       window.open(this.model.pdf, '_blank');
 
     });
-
-
   }
 
 }
