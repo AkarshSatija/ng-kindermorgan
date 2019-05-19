@@ -1,0 +1,127 @@
+<mat-icon>home</mat-icon>
+
+<div>
+  <div>
+    <mat-accordion>
+      <mat-expansion-panel>
+
+        <mat-expansion-panel-header class="filter-header">
+          <mat-panel-title>
+            Contract Filters
+          </mat-panel-title>
+          <mat-panel-description>
+            Filter Data
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="pd-10">
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field class="width-100">
+                <input matInput placeholder="Job Name" name='jobName' ngModel [(ngModel)]="filterVM.jobName">
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="width-100">
+                <input matInput [matDatepicker]="picker" placeholder="Choose signature date from" name='dateFrom'
+                  ngModel [(ngModel)]="filterVM.dateFrom">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="width-100">
+                <input matInput [matDatepicker]="picker1" placeholder="Choose signature date to" name='dateTo' ngModel
+                  [(ngModel)]="filterVM.dateTo">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+              <mat-form-field class="width-100">
+                <input matInput placeholder="Station Number From" name='stationNumberFrom' ngModel
+                  [(ngModel)]="filterVM.stationNumberFrom">
+              </mat-form-field>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-3">
+              <mat-form-field class="width-100">
+                <input matInput placeholder="Station Number To" name='stationNumberTo' ngModel
+                  [(ngModel)]="filterVM.stationNumberTo">
+              </mat-form-field>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-3">
+              <input type="submit" class="btn-search mrt-15" text="Search" value="Search"  (click)="getTableData()">
+            </div>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="tblListSource">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="vendorName">
+          <th mat-header-cell *matHeaderCellDef> Vendor Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.vendorName}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="jobName">
+          <th mat-header-cell *matHeaderCellDef> Job Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.jobName}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="signatureDate">
+          <th mat-header-cell *matHeaderCellDef> Signature Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.signatureDate | date: 'dd/MM/yyyy'}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="stationNumberFrom">
+          <th mat-header-cell *matHeaderCellDef> Station NumberFrom </th>
+          <td mat-cell *matCellDef="let element"> {{element.stationNumberFrom}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="stationNumberTo">
+          <th mat-header-cell *matHeaderCellDef> Station NumberTo </th>
+          <td mat-cell *matCellDef="let element"> {{element.stationNumberTo}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="createdDate">
+          <th mat-header-cell *matHeaderCellDef> Created Date </th>
+          <td mat-cell *matCellDef="let element"> {{element.createdDate | date: 'dd/MM/yyyy'}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="pdfUrl">
+          <th mat-header-cell *matHeaderCellDef> Download PDF </th>
+          <td mat-cell *matCellDef="let element"> 
+            <a [routerLink]="" (click)="downloadPDF(element.pdfUrl)">PDF</a> </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="tblListColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: tblListColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>

@@ -6,10 +6,10 @@ export const environment = {
   production: false,
 
   //// Production API End Point
-  apiEndpoint:'http://apikindermorgan.lsyards.com/'
+  //apiEndpoint:'http://apikindermorgan.lsyards.com/'
   
   //// Development API End point
-  // apiEndpoint:'http://localhost:3000/'
+   apiEndpoint:'http://localhost:3000/'
 
 
 

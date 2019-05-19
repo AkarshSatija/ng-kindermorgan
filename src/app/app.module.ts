@@ -12,15 +12,19 @@ import { AppComponent } from './app.component';
 import { SignaturePadModule } from 'angular2-signaturepad';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDatepickerModule, MatInputModule,MatNativeDateModule,MatProgressSpinnerModule} from '@angular/material';
+import {MatDatepickerModule, MatInputModule,MatNativeDateModule,MatProgressSpinnerModule, MatTableModule, MatPaginatorModule, MatExpansionModule, MatMenuModule, MatIconModule} from '@angular/material';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 import { ContractService } from './contract.service';
+import { StartupComponent } from './startup/startup.component';
+import { ListComponent } from './list/list.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    StartupComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
@@ -35,11 +39,17 @@ import { ContractService } from './contract.service';
     AppRoutingModule,
     SignaturePadModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule
+    OwlNativeDateTimeModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatExpansionModule,
+    MatMenuModule,
+    MatIconModule
+    
   //  AngularSignaturePadModule.forRoot()
 
   ],
   providers: [ContractService],
-  bootstrap: [AppComponent]
+  bootstrap: [StartupComponent]
 })
 export class AppModule { }
