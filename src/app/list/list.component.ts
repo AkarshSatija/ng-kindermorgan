@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
 
   filterVM: any = {};
 
-  
+
 
 
   constructor(private _contractService: ContractService) { }
@@ -52,31 +52,41 @@ export class ListComponent implements OnInit {
     });
   }
 
-  getTableData() {
+  getTableData(reset: boolean) {
 
     console.log('FilterVM - ' + this.filterVM);
-
-    if ((this.filterVM.jobName != undefined && this.filterVM.jobName != '') || (this.filterVM.dateFrom != undefined && this.filterVM.dateFrom != '') || (this.filterVM.dateTo != undefined && this.filterVM.dateTo != '') || (this.filterVM.stationNumberFrom != undefined && this.filterVM.stationNumberFrom != '') || (this.filterVM.stationNumberTo != undefined && this.filterVM.stationNumberTo != '')) {
-      console.log('Bingo Valid information');
-
+    if (reset) {
       // Calling API to get data
       this.getContracts(this.filterVM);
-
     }
     else {
-      console.log('Not Valid information');
-      alert('please select at least one value')
+      if ((this.filterVM.jobName != undefined && this.filterVM.jobName != '') || (this.filterVM.dateFrom != undefined && this.filterVM.dateFrom != '') || (this.filterVM.dateTo != undefined && this.filterVM.dateTo != '') || (this.filterVM.stationNumberFrom != undefined && this.filterVM.stationNumberFrom != '') || (this.filterVM.stationNumberTo != undefined && this.filterVM.stationNumberTo != '')) {
+        console.log('Bingo Valid information');
+
+        // Calling API to get data
+        this.getContracts(this.filterVM);
+
+      }
+      else {
+        console.log('Not Valid information');
+        alert('please select at least one value')
+      }
     }
 
   }
   downloadPDF(pdfPath) {
     if (pdfPath != null && pdfPath != '' && pdfPath != undefined) {
-      window.open(apiEndpoint+pdfPath);
+      window.open(apiEndpoint + pdfPath);
     }
-    else{
+    else {
       alert('pdf file path is null, pelase contact to admin');
     }
 
+  }
+
+  onClickReset() {
+    this.filterVM = {};
+    this.getTableData(true);
   }
 
 
