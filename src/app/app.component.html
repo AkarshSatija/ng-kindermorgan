@@ -102,9 +102,15 @@
             [disabled]="!contractForm.form.valid || loading === true">Submit!</button>
         </div>
       </form>
+      <div class="row">  
+          <div class="col-md-12">
+              <a [routerLink]="['/list']" class="lnk pd-15 float-right">Browse previously submitted forms</a>
+          </div> 
+      </div>
     </div>
   </section>
 </div>
+
 <!-- <div class="col-md-12 text-center btn_space">
   <div style="position:fixed;left:40%;top:50%">
     <mat-spinner *ngIf="loading === true"></mat-spinner>
